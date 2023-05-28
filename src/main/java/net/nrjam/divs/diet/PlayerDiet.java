@@ -6,10 +6,6 @@ public abstract class PlayerDiet {
     public abstract int getNeed();
     public abstract String getNeedName();
     protected final int MIN_THRESHOLD = 0;
-    protected final int LOWER_LIMIT = 25;
-    protected final int LOWER_THRESHOLD = 40;
-    protected final int UPPER_THRESHOLD = 60;
-    protected final int UPPER_LIMIT = 75;
     protected final int MAX_THRESHOLD = 100;
 
     public void addNeed(int add) {
