@@ -12,7 +12,7 @@ public class VegetableDiet extends PlayerDiet {
 
     @Override
     public String getNeedName() {
-        return "vegetableDiet";
+        return "vegetableNeed";
     }
 
     @Override
