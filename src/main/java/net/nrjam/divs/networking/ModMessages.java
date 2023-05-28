@@ -7,7 +7,8 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.nrjam.divs.DietaryVariations;
-import net.nrjam.divs.networking.packet.DietDataSyncPacket;
+import net.nrjam.divs.networking.packet.FruitDietDataSyncPacket;
+import net.nrjam.divs.networking.packet.VegetableDietDataSyncPacket;
 
 public class ModMessages {
     private static SimpleChannel INSTANCE;
@@ -27,10 +28,16 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        net.messageBuilder(DietDataSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(DietDataSyncPacket::new)
-                .encoder(DietDataSyncPacket::toBytes)
-                .consumerMainThread(DietDataSyncPacket::handle)
+        net.messageBuilder(FruitDietDataSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(FruitDietDataSyncPacket::new)
+                .encoder(FruitDietDataSyncPacket::toBytes)
+                .consumerMainThread(FruitDietDataSyncPacket::handle)
+                .add();
+
+        net.messageBuilder(VegetableDietDataSyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(VegetableDietDataSyncPacket::new)
+                .encoder(VegetableDietDataSyncPacket::toBytes)
+                .consumerMainThread(VegetableDietDataSyncPacket::handle)
                 .add();
     }
 

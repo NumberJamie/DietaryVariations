@@ -1,30 +1,30 @@
 package net.nrjam.divs.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.nrjam.divs.client.ClientDietData;
 import net.minecraftforge.network.NetworkEvent;
+import net.nrjam.divs.client.ClientDietData;
 
 import java.util.function.Supplier;
 
-public class DietDataSyncPacket {
-    private final int fruitNeed;
+public class VegetableDietDataSyncPacket {
+    private final int vegetableNeed;
 
-    public DietDataSyncPacket(int fruitNeed) {
-        this.fruitNeed = fruitNeed;
+    public VegetableDietDataSyncPacket(int vegetableNeed) {
+        this.vegetableNeed = vegetableNeed;
     }
 
-    public DietDataSyncPacket(FriendlyByteBuf buf) {
-        this.fruitNeed = buf.readInt();
+    public VegetableDietDataSyncPacket(FriendlyByteBuf buf) {
+        this.vegetableNeed = buf.readInt();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeInt(fruitNeed);
+        buf.writeInt(vegetableNeed);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            ClientDietData.set(fruitNeed);
+            ClientDietData.setPlayerVegetableNeed(vegetableNeed);
         });
         return true;
     }

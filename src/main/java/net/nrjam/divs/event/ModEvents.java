@@ -1,23 +1,17 @@
 package net.nrjam.divs.event;
 
-import net.minecraft.client.gui.screens.social.PlayerEntry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -25,9 +19,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.nrjam.divs.DietaryVariations;
 import net.nrjam.divs.diet.PlayerDiet;
 import net.nrjam.divs.diet.PlayerDietProvider;
-import net.nrjam.divs.diet.categories.FruitDiet;
 import net.nrjam.divs.networking.ModMessages;
-import net.nrjam.divs.networking.packet.DietDataSyncPacket;
+import net.nrjam.divs.networking.packet.FruitDietDataSyncPacket;
+import net.nrjam.divs.networking.packet.VegetableDietDataSyncPacket;
 
 import java.util.List;
 
@@ -43,7 +37,10 @@ public class ModEvents {
                     for (PlayerDiet category : dietCategories) {
                         if (category.getNeedName().equals("fruitNeed")) {
                             category.addNeed(10);
-                            ModMessages.sendToPlayer(new DietDataSyncPacket(category.getNeed()), ((ServerPlayer) player));
+                            ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), ((ServerPlayer) player));
+                        } else if (category.getNeedName().equals("vegetableNeed")) {
+                            category.addNeed(10);
+                            ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), ((ServerPlayer) player));
                         }
                     }
                 });
@@ -91,7 +88,11 @@ public class ModEvents {
                     if (category.getNeed() > 0 && event.player.getRandom().nextFloat() < 0.005f) {
                         category.subNeed(1);
                         event.player.sendSystemMessage(Component.literal("Subtracted " + category.getNeedName() + " from: " +  category.getNeed()));
-                        ModMessages.sendToPlayer(new DietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
+                        if (category.getNeedName().equals("fruitNeed")) {
+                            ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
+                        } else if (category.getNeedName().equals("vegetableNeed")) {
+                            ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
+                        }
                     }
                 }
             });
@@ -105,7 +106,11 @@ public class ModEvents {
                 player.getCapability(PlayerDietProvider.PLAYER_DIET_NEED).ifPresent(provider -> {
                     List<PlayerDiet> dietCategories = provider.getDietCategories();
                     for (PlayerDiet category : dietCategories) {
-                        ModMessages.sendToPlayer(new DietDataSyncPacket(category.getNeed()), player);
+                        if (category.getNeedName().equals("fruitNeed")) {
+                            ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), player);
+                        } else if (category.getNeedName().equals("vegetableNeed")) {
+                            ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), player);
+                        }
                     }
                 });
             }
