@@ -2,11 +2,13 @@ package net.nrjam.divs.event;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -14,6 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.nrjam.divs.DietaryVariations;
 import net.nrjam.divs.diet.PlayerDiet;
 import net.nrjam.divs.diet.PlayerDietProvider;
+import net.nrjam.divs.networking.ModMessages;
+import net.nrjam.divs.networking.packet.DietDataSyncPacket;
 
 import java.util.List;
 
@@ -59,9 +63,24 @@ public class ModEvents {
                     if (category.getNeed() > 0 && event.player.getRandom().nextFloat() < 0.005f) {
                         category.subNeed(1);
                         event.player.sendSystemMessage(Component.literal("Subtracted " + category.getNeedName() + " from: " +  category.getNeed()));
+                        ModMessages.sendToPlayer(new DietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
                     }
                 }
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+        if(!event.getLevel().isClientSide()) {
+            if(event.getEntity() instanceof ServerPlayer player) {
+                player.getCapability(PlayerDietProvider.PLAYER_DIET_NEED).ifPresent(provider -> {
+                    List<PlayerDiet> dietCategories = provider.getDietCategories();
+                    for (PlayerDiet category : dietCategories) {
+                        ModMessages.sendToPlayer(new DietDataSyncPacket(category.getNeed()), player);
+                    }
+                });
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.nrjam.divs.diet.PlayerDietProvider;
 import net.nrjam.divs.event.ModEvents;
+import net.nrjam.divs.networking.ModMessages;
 import org.slf4j.Logger;
 
 @Mod(DietaryVariations.MOD_ID)
@@ -34,7 +35,7 @@ public class DietaryVariations
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        ModMessages.register();
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event)
