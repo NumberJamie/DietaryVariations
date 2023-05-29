@@ -1,0 +1,8 @@
+// 1.19.4	2023-05-29T10:51:23.3947757	Tags for minecraft:item mod id divs
+a69c0892f614fd337a3dbde390e3dee0a090d8c5 data/divs/tags/items/bad_food.json
+b937c5f702ceac56d7a97c875bb499480675f707 data/divs/tags/items/best_food.json
+358a709930f32245199bdcdb987cb88d95cf94be data/divs/tags/items/fruits.json
+23040dc36b5770ad861c3e67389b5d87a8ca785f data/divs/tags/items/good_food.json
+0c8a5bdb7dcb37c4dbeb340d6053e59e7079137f data/divs/tags/items/okay_food.json
+c573efc219c198638b6916e5de42b196f8267a1e data/divs/tags/items/perfect_food.json
+a8a64dbfa1f00d0125703228cab8667cdcafdf23 data/divs/tags/items/vegetables.json
