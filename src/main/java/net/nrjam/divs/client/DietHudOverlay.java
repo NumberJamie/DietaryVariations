@@ -36,6 +36,17 @@ public class DietHudOverlay {
     private static final ResourceLocation UPPER_LIMIT_VEGETABLE = new ResourceLocation(DietaryVariations.MOD_ID,
             "textures/gui/upper_limit_vegetable.png");
 
+    private static final ResourceLocation AVERAGE_SWEET = new ResourceLocation(DietaryVariations.MOD_ID,
+            "textures/gui/average_sweet.png");
+    private static final ResourceLocation LOWER_SWEET = new ResourceLocation(DietaryVariations.MOD_ID,
+            "textures/gui/lower_sweet.png");
+    private static final ResourceLocation UPPER_SWEET = new ResourceLocation(DietaryVariations.MOD_ID,
+            "textures/gui/upper_sweet.png");
+    private static final ResourceLocation LOWER_LIMIT_SWEET = new ResourceLocation(DietaryVariations.MOD_ID,
+            "textures/gui/lower_limit_sweet.png");
+    private static final ResourceLocation UPPER_LIMIT_SWEET = new ResourceLocation(DietaryVariations.MOD_ID,
+            "textures/gui/upper_limit_sweet.png");
+
     static void CreateHUDOverlay(int data, ResourceLocation upper, ResourceLocation lower, ResourceLocation average, ResourceLocation upperLimit, ResourceLocation lowerLimit, PoseStack poseStack, int pos1, int pos2) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -72,5 +83,11 @@ public class DietHudOverlay {
         CreateHUDOverlay(ClientDietData.getPlayerVegetableNeed(), UPPER_VEGETABLE, LOWER_VEGETABLE, AVERAGE_VEGETABLE, UPPER_LIMIT_VEGETABLE, LOWER_LIMIT_VEGETABLE, poseStack, width / 2 + 18, height - 49);
     });
 
+    public static final IGuiOverlay HUD_SWEET_NEED = ((gui, poseStack, partialTick, width, height) -> {
+        if(!gui.shouldDrawSurvivalElements()){
+            return;
+        }
+        CreateHUDOverlay(ClientDietData.getPlayerSweetNeed(), UPPER_SWEET, LOWER_SWEET, AVERAGE_SWEET, UPPER_LIMIT_SWEET, LOWER_LIMIT_SWEET, poseStack, width / 2 + 27, height - 49);
+    });
 
 }

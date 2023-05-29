@@ -11,6 +11,7 @@ public class ModTags {
     public static class Items {
         public static final TagKey<Item> FRUITS = tag("fruits");
         public static final TagKey<Item> VEGETABLES = tag("vegetables");
+        public static final TagKey<Item> SWEETS = tag("sweets");
 
         public static final TagKey<Item> BAD_FOOD = tag("bad_food");
         public static final TagKey<Item> OKAY_FOOD = tag("okay_food");

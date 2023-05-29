@@ -22,6 +22,7 @@ import net.nrjam.divs.diet.PlayerDiet;
 import net.nrjam.divs.diet.PlayerDietProvider;
 import net.nrjam.divs.networking.ModMessages;
 import net.nrjam.divs.networking.packet.FruitDietDataSyncPacket;
+import net.nrjam.divs.networking.packet.SweetDietDataSyncPacket;
 import net.nrjam.divs.networking.packet.VegetableDietDataSyncPacket;
 
 import java.util.HashMap;
@@ -56,7 +57,8 @@ public class ModEvents {
 
     private static boolean shouldHandleCategory(PlayerDiet category, LivingEntityUseItemEvent.Finish event) {
         return (category.getNeedName().equals("fruitNeed") && event.getItem().is(ModTags.Items.FRUITS))
-                || (category.getNeedName().equals("vegetableNeed") && event.getItem().is(ModTags.Items.VEGETABLES));
+                || (category.getNeedName().equals("vegetableNeed") && event.getItem().is(ModTags.Items.VEGETABLES))
+                || (category.getNeedName().equals("sweetNeed") && event.getItem().is(ModTags.Items.SWEETS));
     }
 
     private static Map<TagKey<Item>, Integer> getCategoryTagToNeedMap(PlayerDiet category) {
@@ -74,6 +76,8 @@ public class ModEvents {
             ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), (ServerPlayer) player);
         } else if (category.getNeedName().equals("vegetableNeed")) {
             ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), (ServerPlayer) player);
+        } else if (category.getNeedName().equals("sweetNeed")) {
+            ModMessages.sendToPlayer(new SweetDietDataSyncPacket(category.getNeed()), (ServerPlayer) player);
         }
         // player.sendSystemMessage(Component.literal("to " + category.getNeedName() + " added: " +  category.getNeed()));
     }
@@ -122,6 +126,8 @@ public class ModEvents {
                             ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
                         } else if (category.getNeedName().equals("vegetableNeed")) {
                             ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
+                        } else if (category.getNeedName().equals("sweetNeed")) {
+                            ModMessages.sendToPlayer(new SweetDietDataSyncPacket(category.getNeed()), ((ServerPlayer) event.player));
                         }
                     }
                 }
@@ -140,6 +146,8 @@ public class ModEvents {
                             ModMessages.sendToPlayer(new FruitDietDataSyncPacket(category.getNeed()), player);
                         } else if (category.getNeedName().equals("vegetableNeed")) {
                             ModMessages.sendToPlayer(new VegetableDietDataSyncPacket(category.getNeed()), player);
+                        } else if (category.getNeedName().equals("sweetNeed")) {
+                            ModMessages.sendToPlayer(new SweetDietDataSyncPacket(category.getNeed()), player);
                         }
                     }
                 });

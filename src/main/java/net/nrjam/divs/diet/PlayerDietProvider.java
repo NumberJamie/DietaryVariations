@@ -9,6 +9,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.nrjam.divs.diet.categories.FruitDiet;
+import net.nrjam.divs.diet.categories.SweetDiet;
 import net.nrjam.divs.diet.categories.VegetableDiet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ public class PlayerDietProvider implements ICapabilityProvider, INBTSerializable
         if (dietCategories.isEmpty()) {
             dietCategories.add(new FruitDiet());
             dietCategories.add(new VegetableDiet());
+            dietCategories.add(new SweetDiet());
         }
         return this;
     }
@@ -64,12 +66,12 @@ public class PlayerDietProvider implements ICapabilityProvider, INBTSerializable
     }
 
     private PlayerDiet getDietCategoryByName(String categoryName) {
-        if (categoryName.equals("FruitNeed")) {
-            return new FruitDiet();
-        } else if (categoryName.equals("VegetableNeed")) {
-            return new VegetableDiet();
-        }
-        return null;
+        return switch (categoryName) {
+            case "fruitNeed" -> new FruitDiet();
+            case "vegetableNeed" -> new VegetableDiet();
+            case "sweetNeed" -> new SweetDiet();
+            default -> null;
+        };
     }
 
     public List<PlayerDiet> getDietCategories() {

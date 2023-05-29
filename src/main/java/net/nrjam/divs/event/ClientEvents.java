@@ -13,8 +13,9 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll("fruit", DietHudOverlay.HUD_FRUIT_NEED);
-            event.registerAboveAll("vegetable", DietHudOverlay.HUD_VEGETABLE_NEED);
+            event.registerBelowAll("fruit", DietHudOverlay.HUD_FRUIT_NEED);
+            event.registerBelowAll("vegetable", DietHudOverlay.HUD_VEGETABLE_NEED);
+            event.registerBelowAll("sweet", DietHudOverlay.HUD_SWEET_NEED);
         }
     }
 }

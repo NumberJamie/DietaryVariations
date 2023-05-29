@@ -3,6 +3,7 @@ package net.nrjam.divs.datagen.tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -33,11 +34,14 @@ public class ModItemTags extends ItemTagsProvider {
                 .add(Items.DRIED_KELP);
         this.tag(ModTags.Items.GOOD_FOOD)
                 .add(Items.APPLE)
+                .add(Items.COOKIE)
+                .add(Items.CAKE)
                 .add(Items.BAKED_POTATO)
                 .add(Items.BEETROOT_SOUP);
         this.tag(ModTags.Items.BEST_FOOD)
                 .add(Items.MUSHROOM_STEW)
-                .add(Items.PUMPKIN_PIE);
+                .add(Items.PUMPKIN_PIE)
+                .add(Items.HONEY_BOTTLE);
         this.tag(ModTags.Items.PERFECT_FOOD)
                 .add(Items.GOLDEN_CARROT)
                 .add(Items.GOLDEN_APPLE)
@@ -63,5 +67,11 @@ public class ModItemTags extends ItemTagsProvider {
                 .add(Items.PUMPKIN_PIE)
                 .add(Items.BEETROOT_SOUP)
                 .add(Items.MUSHROOM_STEW);
+        this.tag(ModTags.Items.SWEETS)
+                .add(Items.SWEET_BERRIES)
+                .add(Items.COOKIE)
+                .add(Items.CAKE)
+                .add(Items.PUMPKIN_PIE)
+                .add(Items.HONEY_BOTTLE);
     }
 }
